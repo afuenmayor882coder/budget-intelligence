@@ -1,0 +1,16 @@
+{% set v = pick_variant(subject ~ type ~ (evidence.runway_days | default(0) | string)) %}
+{% if type == 'risk' and evidence.runway_days is defined %}
+  {% if evidence.runway_days < 14 %}
+    {% if v == 0 %}
+      Critical: at the current burn rate of {{ evidence.daily_burn_usd | money }}/day, your available balance covers only {{ evidence.runway_days }} days without new income.
+    {% else %}
+      With only {{ evidence.runway_days }} days of runway remaining, immediate attention to cash flow is needed.
+    {% endif %}
+  {% elif evidence.runway_days < 30 %}
+    At the current spending pace, funds will last approximately {{ evidence.runway_days }} days — entering the warning zone below 30 days.
+  {% endif %}
+{% elif type == 'milestone' and evidence.runway_days is defined %}
+  Your cash runway stands at {{ evidence.runway_days }} days — comfortably above the 90-day safety benchmark.
+{% else %}
+  Cash runway: {{ evidence.runway_days | default('N/A') }} days at current burn rate.
+{% endif %}

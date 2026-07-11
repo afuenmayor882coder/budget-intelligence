@@ -1,0 +1,9 @@
+{% if type == 'milestone' and evidence.txn_count is defined %}
+  {% if evidence.txn_count <= 50 %}
+    You've uploaded your first {{ evidence.txn_count }} {{ 'transaction' | pluralize(evidence.txn_count) }}. The more data you add, the more accurate your insights will be.
+  {% else %}
+    Data import complete.
+  {% endif %}
+{% else %}
+  Your data is loaded and analysis is ready.
+{% endif %}

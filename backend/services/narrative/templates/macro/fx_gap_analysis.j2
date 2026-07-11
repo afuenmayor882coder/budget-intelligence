@@ -1,0 +1,10 @@
+{% if type == 'risk' and evidence.age_days is defined %}
+  {% set v = pick_variant(evidence.last_rate_date | default('') ~ evidence.age_days | string) %}
+  {% if v == 0 %}
+    Exchange rate data is {{ evidence.age_days }} days old (last reading: {{ evidence.last_binance_rate | money('VES') }} on {{ evidence.last_rate_date }}). Forecasts may be less reliable until fresh rates are synced.
+  {% else %}
+    Rate data hasn't been updated in {{ evidence.age_days }} days — sync now for accurate projections.
+  {% endif %}
+{% else %}
+  The Binance parallel rate and BCV official rate show a gap worth monitoring.
+{% endif %}

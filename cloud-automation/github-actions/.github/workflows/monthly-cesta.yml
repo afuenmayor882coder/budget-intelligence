@@ -1,0 +1,41 @@
+name: Monthly Cesta Basica Update
+
+on:
+  schedule:
+    # 1st and 15th of each month at 22:00 UTC
+    - cron: "0 22 1,15 * *"
+  workflow_dispatch:
+
+jobs:
+  fetch-cesta:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 lxml
+
+      - name: Fetch Cesta Basica from CENDAS-FVM
+        run: python cloud-automation/github-actions/scripts/fetch_cesta.py
+
+      - name: Commit updated cesta basica data
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add cloud-automation/github-actions/data/cesta_basica.csv
+          git diff --staged --quiet || git commit -m "chore: update cesta basica $(date -u +%Y-%m)"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}

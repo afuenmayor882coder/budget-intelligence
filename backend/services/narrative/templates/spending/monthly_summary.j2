@@ -1,0 +1,43 @@
+{% set v = pick_variant(subject ~ type ~ (evidence.current_period | default(''))) %}
+{% if type == 'compare' and evidence.current_usd is defined %}
+  {% if v == 0 %}
+    Your {{ subject | lower }} in {{ evidence.current_period | default('this month') }} reached {{ evidence.current_usd | money }},
+    {% if direction == 'up' %}up {{ evidence.change_pct | pct_signed }} from {{ evidence.previous_period | default('last month') }}{% if magnitude in ['large','extreme'] %} — your highest in recent months{% endif %}.
+    {% elif direction == 'down' %}down {{ evidence.change_pct | abs | pct }} from {{ evidence.previous_period | default('last month') }} — a welcome reduction.
+    {% else %}essentially flat versus {{ evidence.previous_period | default('last month') }}.{% endif %}
+  {% elif v == 1 %}
+    {{ evidence.current_period | default('This month') }}, {{ subject | lower }} landed at {{ evidence.current_usd | money }}
+    {% if direction == 'up' and magnitude in ['large','extreme'] %} — the largest figure in {{ evidence.lookback_months | default('several') }} months.
+    {% elif direction == 'down' %}, down {{ evidence.change_pct | abs | pct }} month-over-month.
+    {% else %}, roughly in line with last month.{% endif %}
+  {% elif v == 2 %}
+    You spent {{ evidence.current_usd | money }} on {{ subject | lower }} this {{ evidence.current_period | default('month') }},
+    {{ evidence.change_pct | delta }} versus {{ evidence.previous_period | default('the prior period') }}.
+  {% else %}
+    {{ subject }} totaled {{ evidence.current_usd | money }} ({{ evidence.change_pct | pct_signed }} month-over-month).
+  {% endif %}
+{% elif type == 'streak' %}
+  {% if direction == 'up' and evidence.streak_type == 'overspending' %}
+    For {{ evidence.consecutive_months }} {{ 'month' | pluralize(evidence.consecutive_months) }} running, spending has exceeded income — a pattern worth addressing before it compounds.
+  {% elif evidence.streak_type == 'positive_savings' %}
+    You've maintained positive savings for {{ evidence.consecutive_months }} consecutive {{ 'month' | pluralize(evidence.consecutive_months) }}, which is a healthy streak to protect.
+  {% elif evidence.streak_type == 'spending_increasing' %}
+    Spending has risen every month for the past {{ evidence.consecutive_months }} {{ 'month' | pluralize(evidence.consecutive_months) }}.
+  {% else %}
+    Your {{ subject | lower }} shows a {{ evidence.consecutive_months }}-month streak.
+  {% endif %}
+{% elif type == 'milestone' and evidence.savings_rate_pct is defined %}
+  {% if evidence.savings_rate_pct >= 20 %}
+    Strong month: you saved {{ evidence.savings_rate_pct | pct }} of your income ({{ evidence.savings_usd | money }}), well above the 20% benchmark.
+  {% elif evidence.savings_rate_pct > 0 %}
+    You ended the month with positive savings of {{ evidence.savings_usd | money }} — a {{ evidence.savings_rate_pct | pct }} savings rate.
+  {% endif %}
+{% elif type == 'threshold' and evidence.savings_rate_pct is defined %}
+  {% if evidence.savings_rate_pct < 0 %}
+    Expenses exceeded income by {{ evidence.deficit_usd | money }} this month, resulting in a negative cash flow.
+  {% elif evidence.savings_rate_pct < 10 %}
+    Your savings rate of {{ evidence.savings_rate_pct | pct }} is below the 10% healthy threshold this month.
+  {% endif %}
+{% else %}
+  Your {{ subject | lower }} is {{ direction }}{% if evidence.monthly_change_pct is defined %}, averaging {{ evidence.monthly_change_pct | pct_signed }} per month{% endif %}.
+{% endif %}

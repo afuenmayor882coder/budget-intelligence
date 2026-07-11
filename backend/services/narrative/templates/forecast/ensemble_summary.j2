@@ -1,0 +1,12 @@
+{% set variant = seed % 3 %}
+{% if variant == 0 %}
+The {{ target | default('FX') }} forecast points {{ direction | default('up') }} over the next {{ horizon_days | default(7) }} days
+{% if magnitude == 'large' %} — a significant move{% endif %},
+from {{ forecast_start | default('—') }} to {{ forecast_end | default('—') }} VES ({{ change_pct | default(0) | round(1) }}%).
+{% elif variant == 1 %}
+Over {{ horizon_days | default(7) }} days, {{ target | default('the rate') }} is projected to reach {{ forecast_end | default('—') }} VES,
+a {{ change_pct | default(0) | round(1) }}% change from current levels.
+{% else %}
+Model ensemble suggests {{ target | default('FX') }} will {{ 'rise' if direction == 'up' else 'fall' if direction == 'down' else 'hold steady' }}
+to approximately {{ forecast_end | default('—') }} VES by end of horizon.
+{% endif %}

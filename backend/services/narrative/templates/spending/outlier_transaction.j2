@@ -1,0 +1,13 @@
+{% if evidence.top_outlier %}
+  {% set t = evidence.top_outlier %}
+  {% set v = pick_variant(t.fecha ~ t.amount_usd | string) %}
+  {% if v == 0 %}
+    A {{ t.amount_usd | money }} {{ t.categoria | default('transaction') }} on {{ t.fecha | date_relative }} stands out as unusually large — {{ t.z_score }}× above your typical transaction size.
+  {% elif v == 1 %}
+    Your largest recent transaction was {{ t.amount_usd | money }} ({{ t.descripcion | default(t.categoria) | default('unclassified') }}) on {{ t.fecha | date_relative }}, well above the {{ evidence.mean_transaction_usd | money }} average.
+  {% else %}
+    One transaction dominates the anomaly list: {{ t.amount_usd | money }} for {{ t.descripcion | default(t.categoria) | default('expenses') }} on {{ t.fecha | date_relative }}.
+  {% endif %}
+{% else %}
+  An unusually large transaction was detected this period.
+{% endif %}

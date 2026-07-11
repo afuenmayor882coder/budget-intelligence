@@ -1,0 +1,12 @@
+{% if evidence.increase_pct is defined %}
+  {% set v = pick_variant(evidence.current_month_usd | string ~ evidence.increase_pct | string) %}
+  {% if v == 0 %}
+    Your burn rate is accelerating: this month's spending of {{ evidence.current_month_usd | money }} is {{ evidence.increase_pct | pct }} above last month's {{ evidence.prev_month_usd | money }}.
+  {% elif v == 1 %}
+    Spending jumped {{ evidence.increase_pct | pct }} month-over-month, from {{ evidence.prev_month_usd | money }} to {{ evidence.current_month_usd | money }}.
+  {% else %}
+    Month-over-month expenses rose {{ evidence.increase_pct | pct }} — watch for sustained acceleration.
+  {% endif %}
+{% else %}
+  Burn rate is elevated this period.
+{% endif %}

@@ -1,0 +1,7 @@
+{% if severity == 'warning' %}
+Model accuracy for {{ model | default('forecast') }} needs attention — MAE of {{ mae | default('—') }} VES exceeds target benchmarks.
+{% elif severity == 'notice' %}
+The {{ model | default('model') }} ({% if layer %}{{ layer }}{% else %}Layer 1{% endif %}) achieves strong accuracy with MAE of {{ mae | default('—') }} VES{% if mape %} ({{ mape | round(1) }}% MAPE){% endif %}.
+{% else %}
+Diagnostic check: {{ model | default('model') }} backtest MAE = {{ mae | default('—') }} VES — within acceptable range for volatile FX.
+{% endif %}

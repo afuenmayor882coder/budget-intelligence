@@ -1,0 +1,35 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Backend (local user data)
+backend/venv/
+backend/data/budget.db
+backend/.env
+__pycache__/
+*.pyc
+
+# Cloud automation ephemeral fetch artifacts
+cloud-automation/github-actions/data/bcv_today.json
+cloud-automation/github-actions/data/binance_today.json
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

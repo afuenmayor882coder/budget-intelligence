@@ -1,0 +1,290 @@
+[
+  {
+    "id": 1,
+    "model_name": "arima",
+    "layer": "layer1",
+    "target": "binance",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 19.785665952797736,
+      "mape": 3.8490573222711886,
+      "rmse": 25.141491265480898,
+      "smape": 4.017517666399202,
+      "mase": 4.464546652844433
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T19:19:48.307515+00:00"
+  },
+  {
+    "id": 2,
+    "model_name": "ets",
+    "layer": "layer1",
+    "target": "binance",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 20.409812042281413,
+      "mape": 3.998249368312126,
+      "rmse": 26.32748825696129,
+      "smape": 4.19486338520598,
+      "mase": 4.622638094026151
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T19:19:48.601053+00:00"
+  },
+  {
+    "id": 3,
+    "model_name": "theta",
+    "layer": "layer1",
+    "target": "binance",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 21.246107594146473,
+      "mape": 4.458707115259146,
+      "rmse": 25.093073483689544,
+      "smape": 4.5516850271187,
+      "mase": 4.875376641149301
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T19:19:48.631524+00:00"
+  },
+  {
+    "id": 4,
+    "model_name": "arima",
+    "layer": "layer1",
+    "target": "bcv",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 2.480562325654101,
+      "mape": 0.9077694259638956,
+      "rmse": 2.9955754797194856,
+      "smape": 0.9129551935513651,
+      "mase": 2.5443342755266394
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T19:20:07.570218+00:00"
+  },
+  {
+    "id": 5,
+    "model_name": "ets",
+    "layer": "layer1",
+    "target": "bcv",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 2.465578479595588,
+      "mape": 0.9012441129261657,
+      "rmse": 2.9824642495225415,
+      "smape": 0.9068393485604199,
+      "mase": 2.5287427850658823
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T19:20:07.918147+00:00"
+  },
+  {
+    "id": 6,
+    "model_name": "theta",
+    "layer": "layer1",
+    "target": "bcv",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 5.658933324502749,
+      "mape": 2.1804632445664933,
+      "rmse": 5.895573106091563,
+      "smape": 2.1541838572377197,
+      "mase": 5.834493557080026
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T19:20:07.950101+00:00"
+  },
+  {
+    "id": 7,
+    "model_name": "arima",
+    "layer": "layer1",
+    "target": "binance",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 19.785665952797736,
+      "mape": 3.8490573222711886,
+      "rmse": 25.141491265480898,
+      "smape": 4.017517666399202,
+      "mase": 4.464546652844433
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T20:03:28.821941+00:00"
+  },
+  {
+    "id": 8,
+    "model_name": "ets",
+    "layer": "layer1",
+    "target": "binance",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 20.409812042281413,
+      "mape": 3.998249368312126,
+      "rmse": 26.32748825696129,
+      "smape": 4.19486338520598,
+      "mase": 4.622638094026151
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T20:03:28.959333+00:00"
+  },
+  {
+    "id": 9,
+    "model_name": "theta",
+    "layer": "layer1",
+    "target": "binance",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 21.246107594146473,
+      "mape": 4.458707115259146,
+      "rmse": 25.093073483689544,
+      "smape": 4.5516850271187,
+      "mase": 4.875376641149301
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T20:03:28.980323+00:00"
+  },
+  {
+    "id": 10,
+    "model_name": "random_forest",
+    "layer": "layer3",
+    "target": "binance",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 30.6400288416305,
+      "mape": 6.116330326869549,
+      "rmse": 37.29815763736316,
+      "smape": 6.48657921074999,
+      "mase": 6.949784226393524
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T20:03:33.382301+00:00"
+  },
+  {
+    "id": 11,
+    "model_name": "elastic_net",
+    "layer": "layer3",
+    "target": "binance",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 24.905213588147877,
+      "mape": 4.96792028137585,
+      "rmse": 30.593547493349934,
+      "smape": 5.22299500954521,
+      "mase": 5.6515014422507655
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T20:03:34.022088+00:00"
+  },
+  {
+    "id": 12,
+    "model_name": "mlp",
+    "layer": "layer4",
+    "target": "binance",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 57936.804535756135,
+      "mape": 15544.667846340915,
+      "rmse": 126113.01901769568,
+      "smape": 93.75689155527071,
+      "mase": 14291.919195011458
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T20:03:36.263720+00:00"
+  },
+  {
+    "id": 13,
+    "model_name": "arima",
+    "layer": "layer1",
+    "target": "bcv",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 2.480562325654101,
+      "mape": 0.9077694259638956,
+      "rmse": 2.9955754797194856,
+      "smape": 0.9129551935513651,
+      "mase": 2.5443342755266394
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T20:03:50.050029+00:00"
+  },
+  {
+    "id": 14,
+    "model_name": "ets",
+    "layer": "layer1",
+    "target": "bcv",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 2.465578479595588,
+      "mape": 0.9012441129261657,
+      "rmse": 2.9824642495225415,
+      "smape": 0.9068393485604199,
+      "mase": 2.5287427850658823
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T20:03:50.204312+00:00"
+  },
+  {
+    "id": 15,
+    "model_name": "theta",
+    "layer": "layer1",
+    "target": "bcv",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 5.658933324502749,
+      "mape": 2.1804632445664933,
+      "rmse": 5.895573106091563,
+      "smape": 2.1541838572377197,
+      "mase": 5.834493557080026
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T20:03:50.229057+00:00"
+  },
+  {
+    "id": 16,
+    "model_name": "random_forest",
+    "layer": "layer3",
+    "target": "bcv",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 11.096371778733644,
+      "mape": 4.241802791755656,
+      "rmse": 13.492199538494074,
+      "smape": 4.394950337919459,
+      "mase": 11.55855067053783
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T20:03:54.276056+00:00"
+  },
+  {
+    "id": 17,
+    "model_name": "elastic_net",
+    "layer": "layer3",
+    "target": "bcv",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 5.005199471858281,
+      "mape": 1.8199159327205876,
+      "rmse": 6.173939561294985,
+      "smape": 1.8494696853115553,
+      "mase": 5.103760482277002
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T20:03:55.330045+00:00"
+  },
+  {
+    "id": 18,
+    "model_name": "mlp",
+    "layer": "layer4",
+    "target": "bcv",
+    "hyperparams": {},
+    "metrics": {
+      "mae": 607049.5631371404,
+      "mape": 218972.1645473411,
+      "rmse": 1382357.7934353864,
+      "smape": 134.3050936142361,
+      "mase": 623131.1549784532
+    },
+    "artifact_path": null,
+    "trained_at": "2026-07-11T20:04:02.738016+00:00"
+  }
+]

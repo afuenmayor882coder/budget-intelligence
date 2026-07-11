@@ -1,0 +1,8 @@
+{% set v = pick_variant(subject ~ (evidence.monthly_subs_usd | default(0) | string)) %}
+{% if v == 0 %}
+  Your active subscriptions total {{ evidence.monthly_subs_usd | money }}/month — above the $50 threshold where subscription creep typically starts to affect savings meaningfully.
+{% elif v == 1 %}
+  You're spending {{ evidence.monthly_subs_usd | money }} per month on subscriptions ({{ evidence.monthly_subs_usd * 12 | money }}/year), which exceeds the $50/month tracking threshold.
+{% else %}
+  Subscription costs sit at {{ evidence.monthly_subs_usd | money }}/month. This adds up to {{ evidence.monthly_subs_usd * 12 | money }} annually.
+{% endif %}

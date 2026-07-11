@@ -1,0 +1,18 @@
+{% set v = pick_variant(lens ~ (value | default(0) | string)) %}
+{% if lens == 'spending' and value is defined %}
+  {% if v == 0 %}
+    Your personal spending basket has {{ 'grown' if direction == 'up' else 'contracted' }} {{ value | pct_signed }} over the tracked period, reflecting your {{ 'personal' }} inflation rate.
+  {% else %}
+    The cost of maintaining your spending habits has {{ 'risen' if direction == 'up' else 'fallen' }} {{ value | abs | pct }} — your personal inflation rate.
+  {% endif %}
+{% elif lens == 'cesta' and baskets is defined %}
+  {% if v == 0 %}
+    Your income currently covers {{ baskets }} Cesta Basica {{ 'basket' | pluralize(baskets | int) }} — {% if baskets >= 2 %}a comfortable buffer{% elif baskets >= 1 %}just above the basic threshold{% else %}below the cost of a basic family basket{% endif %}.
+  {% else %}
+    At {{ baskets }}× the Cesta Basica value, your purchasing power is {% if baskets >= 2 %}solid{% elif baskets >= 1 %}tight but covering essentials{% else %}strained{% endif %}.
+  {% endif %}
+{% elif lens == 'subscriptions' and fx_change is defined %}
+  Your USD-denominated subscriptions have become {{ fx_change | pct }} more expensive in VES terms over the past 6 months, driven entirely by exchange rate depreciation.
+{% else %}
+  Purchasing power is tracking the broader inflation and FX environment.
+{% endif %}

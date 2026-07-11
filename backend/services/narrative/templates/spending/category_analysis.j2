@@ -1,0 +1,32 @@
+{% set v = pick_variant(subject ~ (evidence.category | default('')) ~ type) %}
+{% if type == 'compare' and evidence.category is defined %}
+  {% if v == 0 %}
+    Your {{ evidence.category }} spending in {{ evidence.current_period | default('this month') }} reached {{ evidence.current_usd | money }},
+    {% if direction == 'up' %}up {{ evidence.change_pct | pct_signed }} from last month{% if magnitude in ['large','extreme'] %} — a notable acceleration{% endif %}.
+    {% else %}down {{ evidence.change_pct | abs | pct }} — a welcome reduction.{% endif %}
+  {% elif v == 1 %}
+    {{ evidence.category }} landed at {{ evidence.current_usd | money }} this {{ evidence.period_type | default('month') }}
+    {% if magnitude in ['large','extreme'] and direction == 'up' %} — the largest {{ evidence.category }} bill in recent months.
+    {% else %}.{% endif %}
+  {% elif v == 2 %}
+    You spent {{ evidence.current_usd | money }} on {{ evidence.category }} ({{ evidence.change_pct | pct_signed }} versus last month).
+  {% else %}
+    {{ evidence.category }} totaled {{ evidence.current_usd | money }}, {{ evidence.change_pct | delta }} month-over-month.
+  {% endif %}
+{% elif type == 'trend' and evidence.category is defined %}
+  {% if v == 0 %}
+    {{ evidence.category }} spending has been trending {{ direction }} at about {{ evidence.monthly_change_pct | pct_signed }} per month over the past 6 months.
+  {% else %}
+    Your {{ evidence.category }} outlays show a {{ evidence.monthly_change_pct | abs | pct }} monthly {{ 'increase' if direction == 'up' else 'decrease' }} over the trailing period.
+  {% endif %}
+{% elif type == 'threshold' and evidence.pct_of_expenses is defined %}
+  {{ evidence.category }} now accounts for {{ evidence.pct_of_expenses | pct }} of your total spending — above the 30% concentration threshold.
+{% elif type == 'ranking' %}
+  {% if direction == 'up' %}
+    {{ evidence.category }} moved up to #{{ evidence.current_rank }} in your spending ranking (was #{{ evidence.previous_rank }} last month).
+  {% else %}
+    {{ evidence.category }} dropped to #{{ evidence.current_rank }} in your spending ranking (was #{{ evidence.previous_rank }}).
+  {% endif %}
+{% else %}
+  {{ evidence.category | default(subject) }} spending is {{ direction }}.
+{% endif %}

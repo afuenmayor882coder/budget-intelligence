@@ -1,0 +1,14 @@
+{% set v = pick_variant(subject ~ type ~ (evidence.current_usd | default(0) | string)) %}
+{% if type == 'compare' and evidence.change_pct is defined %}
+  {% if v == 0 %}
+    Income {{ 'grew' if direction == 'up' else 'fell' }} {{ evidence.change_pct | pct_signed }} to {{ evidence.current_usd | money }} this month{% if magnitude in ['large','extreme'] %}, a {{ magnitude | magnitude_word }} shift{% endif %}.
+  {% elif v == 1 %}
+    Your earnings this month came in at {{ evidence.current_usd | money }}, {{ evidence.change_pct | delta }} versus last month.
+  {% else %}
+    Monthly income: {{ evidence.current_usd | money }} ({{ evidence.change_pct | pct_signed }} MoM).
+  {% endif %}
+{% elif type == 'risk' %}
+  With income coming from a single source, any interruption directly impacts your full financial position.
+{% else %}
+  Income this period is {{ direction }}.
+{% endif %}

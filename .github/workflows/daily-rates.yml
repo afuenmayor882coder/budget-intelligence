@@ -1,0 +1,58 @@
+name: Daily Exchange Rates Update
+
+on:
+  schedule:
+    # 22:00 UTC = 18:00 VET (Venezuela Eastern Time, UTC-4)
+    - cron: "0 22 * * *"
+  workflow_dispatch:
+
+jobs:
+  fetch-rates:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 lxml
+
+      - name: Run daily rates orchestrator
+        id: fetch
+        continue-on-error: true
+        run: python cloud-automation/github-actions/scripts/run_daily_rates.py
+
+      - name: Upload fetch logs on failure
+        if: steps.fetch.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-rates-logs
+          path: |
+            cloud-automation/github-actions/data/bcv_today.json
+            cloud-automation/github-actions/data/binance_today.json
+            cloud-automation/github-actions/data/sync_meta.json
+          if-no-files-found: ignore
+
+      - name: Commit updated rates
+        if: steps.fetch.outcome == 'success'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add cloud-automation/github-actions/data/rates.csv
+          git add cloud-automation/github-actions/data/sync_meta.json
+          git diff --staged --quiet || git commit -m "chore: update daily exchange rates $(date -u +%Y-%m-%d)"
+
+      - name: Push changes
+        if: steps.fetch.outcome == 'success'
+        run: git push
+
+      - name: Fail job if orchestrator failed
+        if: steps.fetch.outcome == 'failure'
+        run: exit 1

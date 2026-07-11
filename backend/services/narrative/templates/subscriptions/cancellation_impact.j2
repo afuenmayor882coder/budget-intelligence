@@ -1,0 +1,13 @@
+{% set v = pick_variant(subject ~ (evidence.non_essential_monthly_usd | default(0) | string)) %}
+{% if evidence.top_candidates %}
+  {% set top = evidence.top_candidates[0] %}
+  {% if v == 0 %}
+    You have {{ evidence.top_candidates | length }} non-essential {{ 'subscription' | pluralize(evidence.top_candidates | length) }} totaling {{ evidence.non_essential_monthly_usd | money }}/month. Cancelling them would save {{ evidence.annual_savings_usd | money }}/year — starting with {{ top.name }} at {{ top.monthly_usd | money }}/month.
+  {% elif v == 1 %}
+    Non-essential subscriptions cost {{ evidence.non_essential_monthly_usd | money }}/month. The top candidate for cancellation is {{ top.name }} ({{ top.monthly_usd | money }}/mo), which alone represents {{ evidence.annual_savings_usd | money }} in annual savings.
+  {% else %}
+    Opportunity: cancelling {{ top.name }} and similar non-essentials saves {{ evidence.annual_savings_usd | money }}/year.
+  {% endif %}
+{% else %}
+  Some subscription costs may be reducible based on usage and necessity.
+{% endif %}
