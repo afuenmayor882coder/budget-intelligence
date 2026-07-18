@@ -6,10 +6,35 @@ import sys
 from datetime import datetime, timezone
 
 import requests
+import urllib3
 from bs4 import BeautifulSoup
+from requests.exceptions import SSLError
 
 BCV_URL = "https://www.bcv.org.ve/"
 OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "bcv_today.json")
+
+
+def _get_bcv_html(headers: dict) -> str | None:
+    """Fetch BCV homepage HTML, falling back if their cert chain is broken."""
+    try:
+        resp = requests.get(BCV_URL, headers=headers, timeout=15)
+        resp.raise_for_status()
+        return resp.text
+    except SSLError as e:
+        # BCV's public site often serves an incomplete TLS chain; verify=False is
+        # required to scrape the official USD rate reliably from CI and local.
+        print(f"[BCV] SSL verify failed ({e}); retrying without certificate verification", file=sys.stderr)
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        try:
+            resp = requests.get(BCV_URL, headers=headers, timeout=15, verify=False)
+            resp.raise_for_status()
+            return resp.text
+        except Exception as retry_err:
+            print(f"[BCV] Request failed after SSL fallback: {retry_err}", file=sys.stderr)
+            return None
+    except Exception as e:
+        print(f"[BCV] Request failed: {e}", file=sys.stderr)
+        return None
 
 
 def fetch_bcv_rate() -> float | None:
@@ -23,14 +48,11 @@ def fetch_bcv_rate() -> float | None:
         "Accept-Language": "es-VE,es;q=0.9,en;q=0.8",
     }
 
-    try:
-        resp = requests.get(BCV_URL, headers=headers, timeout=15)
-        resp.raise_for_status()
-    except Exception as e:
-        print(f"[BCV] Request failed: {e}", file=sys.stderr)
+    html = _get_bcv_html(headers)
+    if html is None:
         return None
 
-    soup = BeautifulSoup(resp.text, "lxml")
+    soup = BeautifulSoup(html, "lxml")
 
     selectors = [
         "#dolar strong",
